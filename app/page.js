@@ -296,7 +296,7 @@ Be realistic and specific based on what you actually see in the photos.`;
               <div>💰 Quoted: {quote?.price}</div>
             </div>
           </div>
-          <div style={{ color: "#555", fontSize: 13 }}>Questions? Call or text us at <span style={{ color: "#00C2FF" }}>(817) 555-0100</span></div>
+          <div style={{ color: "#555", fontSize: 13 }}>Questions? Call or text us at <span style={{ color: "#00C2FF" }}>(682) 552-8009</span></div>
         </div>
       </div>
     );
@@ -312,7 +312,7 @@ Be realistic and specific based on what you actually see in the photos.`;
           </div>
           <div style={{ color: "#555", fontSize: 11, letterSpacing: "0.05em", textTransform: "uppercase" }}>Exterior Cleaning · Fort Worth</div>
         </div>
-        <div style={{ color: "#555", fontSize: 12 }}>(817) 555-0100</div>
+        <div style={{ color: "#555", fontSize: 12 }}>(682) 552-8009</div>
       </div>
 
       <div style={{ maxWidth: 520, margin: "0 auto", padding: "32px 20px" }}>
