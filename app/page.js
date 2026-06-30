@@ -253,7 +253,7 @@ Be realistic and specific based on what you actually see in the photos.`;
         }
       ];
 
-      const res = await fetch("https://api.anthropic.com/v1/messages", {
+      const res = await fetch("/api/quote", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
