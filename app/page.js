@@ -49,11 +49,43 @@ function PhotoUploader({ photos, setPhotos }) {
   const inputRef = useRef();
   const [dragging, setDragging] = useState(false);
 
+
   const addFiles = (files) => {
     const valid = Array.from(files).filter(f => f.type.startsWith("image/")).slice(0, 6 - photos.length);
+
     valid.forEach(file => {
       const reader = new FileReader();
-      reader.onload = (e) => setPhotos(prev => [...prev, { file, preview: e.target.result, base64: e.target.result.split(",")[1] }]);
+
+      reader.onload = (e) => {
+        const img = new Image();
+
+        img.onload = () => {
+          const canvas = document.createElement("canvas");
+          const maxSize = 800;
+
+          let w = img.width;
+          let h = img.height;
+
+          if (w > h && w > maxSize) {
+            h = (h * maxSize) / w;
+            w = maxSize;
+          } else if (h > maxSize) {
+            w = (w * maxSize) / h;
+            h = maxSize;
+          }
+
+          canvas.width = w;
+          canvas.height = h;
+          canvas.getContext("2d").drawImage(img, 0, 0, w, h);
+
+          const compressed = canvas.toDataURL("image/jpeg", 0.7);
+
+          setPhotos(prev => [...prev, { file, preview: compressed, base64: compressed.split(",")[1] }]);
+        };
+
+        img.src = e.target.result;
+      };
+
       reader.readAsDataURL(file);
     });
   };
