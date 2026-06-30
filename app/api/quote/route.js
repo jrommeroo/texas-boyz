@@ -12,5 +12,6 @@ export async function POST(request) {
     });
   
     const data = await response.json();
+    console.log("Anthropic response:", JSON.stringify(data));
     return Response.json(data);
   }
