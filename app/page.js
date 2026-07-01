@@ -49,43 +49,27 @@ function PhotoUploader({ photos, setPhotos }) {
   const inputRef = useRef();
   const [dragging, setDragging] = useState(false);
 
-
   const addFiles = (files) => {
     const valid = Array.from(files).filter(f => f.type.startsWith("image/")).slice(0, 6 - photos.length);
-
     valid.forEach(file => {
       const reader = new FileReader();
-
       reader.onload = (e) => {
         const img = new Image();
-
         img.onload = () => {
           const canvas = document.createElement("canvas");
           const maxSize = 800;
-
           let w = img.width;
           let h = img.height;
-
-          if (w > h && w > maxSize) {
-            h = (h * maxSize) / w;
-            w = maxSize;
-          } else if (h > maxSize) {
-            w = (w * maxSize) / h;
-            h = maxSize;
-          }
-
+          if (w > h && w > maxSize) { h = (h * maxSize) / w; w = maxSize; }
+          else if (h > maxSize) { w = (w * maxSize) / h; h = maxSize; }
           canvas.width = w;
           canvas.height = h;
           canvas.getContext("2d").drawImage(img, 0, 0, w, h);
-
           const compressed = canvas.toDataURL("image/jpeg", 0.7);
-
           setPhotos(prev => [...prev, { file, preview: compressed, base64: compressed.split(",")[1] }]);
         };
-
         img.src = e.target.result;
       };
-
       reader.readAsDataURL(file);
     });
   };
@@ -116,7 +100,7 @@ function PhotoUploader({ photos, setPhotos }) {
       >
         <div style={{ fontSize: 36, marginBottom: 10 }}>📸</div>
         <div style={{ color: "#ccc", fontSize: 15, fontWeight: 500 }}>Drop photos here or tap to upload</div>
-        <div style={{ color: "#555", fontSize: 12, marginTop: 6 }}>Up to 6 photos • House, driveway, windows, panels</div>
+        <div style={{ color: "#555", fontSize: 12, marginTop: 6 }}>Up to 6 photos · House, driveway, windows, panels</div>
         <input ref={inputRef} type="file" accept="image/*" multiple style={{ display: "none" }} onChange={e => addFiles(e.target.files)} />
       </div>
 
@@ -247,7 +231,7 @@ export default function App() {
 
       const imageContent = photos.slice(0, 4).map(p => ({
         type: "image",
-        source: { type: "base64", media_type: p.file.type || "image/jpeg", data: p.base64 }
+        source: { type: "base64", media_type: "image/jpeg", data: p.base64 }
       }));
 
       const prompt = `You are a pricing assistant for Texas Boyz, a pressure washing and exterior cleaning company in Fort Worth, TX.
@@ -267,13 +251,14 @@ Return ONLY valid JSON (no markdown, no backticks) in this exact format:
   "notes": "Any important notes or caveats about the quote"
 }
 
-Base pricing guidelines (Fort Worth market):
+Base pricing guidelines (Fort Worth market). Always quote on the higher end of the range:
 - House Wash: $400-$2000 depending on size and condition
-- Driveway Cleaning: $200-$1500 depending on size and staining
-- Window Cleaning: $100-$1000 depending on count and access
-- Solar Panel Cleaning: $100-$500 depending on panel count and access
+- Driveway Cleaning: $190-$800 depending on size and staining
+- Window Cleaning: $100-$900 depending on count and access
+- Solar Panel Cleaning: $150-$500 depending on panel count and access
 
-Always quote on the higher end of the range. It is better to quote high and negotiate down than to underprice the job.
+It is better to quote high and negotiate down than to underprice the job. Be realistic and specific based on what you actually see in the photos.`;
+
       const messages = [
         {
           role: "user",
@@ -314,10 +299,10 @@ Always quote on the higher end of the range. It is better to quote high and nego
       <div style={{ minHeight: "100vh", background: "#0a0a0a", display: "flex", alignItems: "center", justifyContent: "center", padding: 24, fontFamily: "'Inter', system-ui, sans-serif" }}>
         <div style={{ maxWidth: 480, width: "100%", textAlign: "center" }}>
           <div style={{ fontSize: 64, marginBottom: 20 }}>✅</div>
-          <div style={{ color: "#00C2FF", fontSize: 28, fontWeight: 700, marginBottom: 8 }}>You're booked!</div>
+          <div style={{ color: "#00C2FF", fontSize: 28, fontWeight: 700, marginBottom: 8 }}>You are booked!</div>
           <div style={{ color: "#888", fontSize: 15, marginBottom: 24 }}>
-            {info.name}, we'll see you on <strong style={{ color: "#fff" }}>{bookDate} at {bookTime}</strong>.<br />
-            We'll text your confirmation to {info.phone}.
+            {info.name}, we will see you on <strong style={{ color: "#fff" }}>{bookDate} at {bookTime}</strong>.<br />
+            We will text your confirmation to {info.phone}.
           </div>
           <div style={{ background: "#111", border: "1px solid #222", borderRadius: 12, padding: 20, marginBottom: 24, textAlign: "left" }}>
             <div style={{ color: "#888", fontSize: 11, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 12 }}>Booking Summary</div>
@@ -327,7 +312,7 @@ Always quote on the higher end of the range. It is better to quote high and nego
               <div>💰 Quoted: {quote?.price}</div>
             </div>
           </div>
-          <div style={{ color: "#555", fontSize: 13 }}>Questions? Call or text us at <span style={{ color: "#00C2FF" }}>(682) 552-8009</span></div>
+          <div style={{ color: "#555", fontSize: 13 }}>Questions? Call or text us at <span style={{ color: "#00C2FF" }}>(817) 555-0100</span></div>
         </div>
       </div>
     );
@@ -335,7 +320,6 @@ Always quote on the higher end of the range. It is better to quote high and nego
 
   return (
     <div style={{ minHeight: "100vh", background: "#0a0a0a", fontFamily: "'Inter', system-ui, sans-serif", color: "#fff" }}>
-      {/* Header */}
       <div style={{ borderBottom: "1px solid #1a1a1a", padding: "18px 24px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
         <div>
           <div style={{ fontSize: 18, fontWeight: 800, letterSpacing: "-0.02em" }}>
@@ -343,13 +327,12 @@ Always quote on the higher end of the range. It is better to quote high and nego
           </div>
           <div style={{ color: "#555", fontSize: 11, letterSpacing: "0.05em", textTransform: "uppercase" }}>Exterior Cleaning · Fort Worth</div>
         </div>
-        <div style={{ color: "#555", fontSize: 12 }}>(682) 552-8009</div>
+        <div style={{ color: "#555", fontSize: 12 }}>(817) 555-0100</div>
       </div>
 
       <div style={{ maxWidth: 520, margin: "0 auto", padding: "32px 20px" }}>
         <StepIndicator current={step} />
 
-        {/* Step 0: Photos + Services */}
         {step === 0 && (
           <div>
             <h2 style={{ fontSize: 22, fontWeight: 700, marginBottom: 6, letterSpacing: "-0.02em" }}>Get an instant quote</h2>
@@ -381,11 +364,10 @@ Always quote on the higher end of the range. It is better to quote high and nego
           </div>
         )}
 
-        {/* Step 1: Info */}
         {step === 1 && (
           <div>
             <h2 style={{ fontSize: 22, fontWeight: 700, marginBottom: 6, letterSpacing: "-0.02em" }}>Your info</h2>
-            <p style={{ color: "#666", fontSize: 14, marginBottom: 24 }}>We'll text your quote and any follow-up questions.</p>
+            <p style={{ color: "#666", fontSize: 14, marginBottom: 24 }}>We will text your quote and any follow-up questions.</p>
 
             {[
               { key: "name", label: "Full Name", placeholder: "John Smith", required: true },
@@ -431,7 +413,6 @@ Always quote on the higher end of the range. It is better to quote high and nego
           </div>
         )}
 
-        {/* Step 2: Quote */}
         {step === 2 && (
           <div>
             <h2 style={{ fontSize: 22, fontWeight: 700, marginBottom: 6, letterSpacing: "-0.02em" }}>Your quote</h2>
@@ -461,11 +442,10 @@ Always quote on the higher end of the range. It is better to quote high and nego
           </div>
         )}
 
-        {/* Step 3: Book */}
         {step === 3 && (
           <div>
             <h2 style={{ fontSize: 22, fontWeight: 700, marginBottom: 6, letterSpacing: "-0.02em" }}>Pick a time</h2>
-            <p style={{ color: "#666", fontSize: 14, marginBottom: 24 }}>Choose when you'd like us to come out. We'll confirm within the hour.</p>
+            <p style={{ color: "#666", fontSize: 14, marginBottom: 24 }}>Choose when you would like us to come out. We will confirm within the hour.</p>
 
             <div style={{ background: "#0d1a20", border: "1px solid #00C2FF33", borderRadius: 12, padding: 16, marginBottom: 24 }}>
               <div style={{ color: "#888", fontSize: 11, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 8 }}>Your quote</div>
