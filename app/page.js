@@ -312,7 +312,8 @@ It is better to quote high and negotiate down than to underprice the job. Be rea
               <div>💰 Quoted: {quote?.price}</div>
             </div>
           </div>
-          <div style={{ color: "#555", fontSize: 13 }}>Questions? Call or text us at <span style={{ color: "#00C2FF" }}>(817) 555-0100</span></div>
+          <div style={{ color: "#555", fontSize: 13 }}>Questions? Call or text us at <span style={{ color: "#00C2FF" }}>(682) 552-8009
+            </span></div>
         </div>
       </div>
     );
