@@ -268,13 +268,12 @@ Return ONLY valid JSON (no markdown, no backticks) in this exact format:
 }
 
 Base pricing guidelines (Fort Worth market):
-- House Wash: $150-$400 depending on size and condition
-- Driveway Cleaning: $80-$200 depending on size and staining
-- Window Cleaning: $100-$300 depending on count and access
-- Solar Panel Cleaning: $100-$250 depending on panel count and access
+- House Wash: $400-$2000 depending on size and condition
+- Driveway Cleaning: $200-$1500 depending on size and staining
+- Window Cleaning: $100-$1000 depending on count and access
+- Solar Panel Cleaning: $100-$500 depending on panel count and access
 
-Be realistic and specific based on what you actually see in the photos.`;
-
+Always quote on the higher end of the range. It is better to quote high and negotiate down than to underprice the job.
       const messages = [
         {
           role: "user",
